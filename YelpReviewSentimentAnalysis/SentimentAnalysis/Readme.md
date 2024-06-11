@@ -12,27 +12,33 @@ This project performs sentiment analysis on Yelp reviews using PySpark. It invol
 ## Setup
 
 1. Install PySpark:  
-`pip install pyspark`
+```bash
+pip install pyspark
+```
 
-2. Download and place the Yelp dataset files (`yelp_academic_dataset_review.json` and `yelp_academic_dataset_business.json`) in the specified HDFS directory.
+3. Download and place the Yelp dataset files (`yelp_academic_dataset_review.json` and `yelp_academic_dataset_business.json`) in the specified HDFS directory.
 
 ## Steps
 
 1. Initialize Spark Session:
 
-`spark = SparkSession.builder \
+```python
+spark = SparkSession.builder \
     .appName("SentimentAnalysis") \
     .config("spark.executor.memory", "5g") \
     .config("spark.driver.memory", "30g") \
     .config("spark.memory.offHeap.enabled", True) \
     .config("spark.memory.offHeap.size", "2g") \
     .config("spark.executor.cores", 2) \
-    .getOrCreate()`
+    .getOrCreate()
+```
 
 2. Read Data:
 
-`yelpReviewDF = spark.read.json('hdfs:///user/apathak2/input/yelp_academic_dataset_review.json')
-yelpBusinessDF = spark.read.json('hdfs:///user/apathak2/input/yelp_academic_dataset_business.json')`
+```python
+yelpReviewDF = spark.read.json('hdfs:///user/apathak2/input/yelp_academic_dataset_review.json')
+yelpBusinessDF = spark.read.json('hdfs:///user/apathak2/input/yelp_academic_dataset_business.json')
+```
 
 3. Data Preprocessing:
 
@@ -58,15 +64,21 @@ yelpBusinessDF = spark.read.json('hdfs:///user/apathak2/input/yelp_academic_data
 
 7. Save Metrics:
 
-`metrics_df.write.format("csv").option("header", "true").coalesce(1).save("hdfs:///user/apathak2/output/scratch_metrics.csv")`
+```python
+metrics_df.write.format("csv").option("header", "true").coalesce(1).save("hdfs:///user/apathak2/output/scratch_metrics.csv")
+```
 
 8. Stop Spark Session:
 
-`spark.stop()`
+```python
+spark.stop()
+```
 
 ## Example Commands
 
-`spark-submit sentiment_analysis.py`
+```bash 
+spark-submit sentiment_analysis.py
+```
 
 ## Results
 
